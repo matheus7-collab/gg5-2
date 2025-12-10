@@ -1,11 +1,17 @@
-/* style.css - FINAL RESPONSIVO */
+/* style.css - VERSÃO CHEVROLET (GOLD & DARK THEME) */
 
 :root {
-    --blue-nav: #1e40af;
-    --blue-btn: #2563eb;
+    /* PALETA CHEVROLET */
+    /* Dourado inspirado na "Gravata" (Logo) da Chevrolet */
+    --chev-gold: #CD9834;       /* Dourado Principal */
+    --chev-gold-hover: #b08229; /* Dourado mais escuro para hover */
+    
+    /* Tons Escuros (Automotivo/Premium) */
+    --chev-nav: #1c1c1c;        /* Cinza Quase Preto para Navbar/Footer */
+    
     --text-dark: #111827;
     --text-gray: #4b5563;
-    --bg-light: #f3f4f6;
+    --bg-light: #f8f9fa;        /* Cinza neutro e limpo */
     --font-main: 'Inter', sans-serif;
 }
 
@@ -19,21 +25,26 @@ img { max-width: 100%; display: block; }
 
 /* --- NAVBAR --- */
 .navbar {
-    background-color: var(--blue-nav);
+    background-color: var(--chev-nav); /* Alterado para Dark Chevrolet */
     height: 70px;
     display: flex; align-items: center;
     position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra mais escura */
 }
 .nav-container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
 .logo { font-size: 1.5rem; font-weight: 700; color: white; }
 
 /* Links Desktop */
 .nav-links { display: flex; gap: 30px; }
-.nav-links a { color: #bfdbfe; font-size: 0.9rem; transition: 0.3s; }
-.nav-links a:hover, .nav-links a.active { color: white; font-weight: 600; }
+/* Link inativo: cinza claro */
+.nav-links a { color: #d1d5db; font-size: 0.9rem; transition: 0.3s; }
+/* Hover/Ativo: Branco ou Dourado */
+.nav-links a:hover, .nav-links a.active { color: var(--chev-gold); font-weight: 600; }
 
-.btn-nav { background-color: var(--blue-btn); color: white; padding: 8px 24px; border-radius: 50px; font-size: 0.9rem; font-weight: 600; }
+/* Botão Navbar: Dourado com texto Branco */
+.btn-nav { background-color: var(--chev-gold); color: white; padding: 8px 24px; border-radius: 50px; font-size: 0.9rem; font-weight: 600; transition: 0.3s; }
+.btn-nav:hover { background-color: var(--chev-gold-hover); }
+
 .mobile-menu-icon { display: none; color: white; font-size: 1.5rem; cursor: pointer; }
 .mobile-only-btn { display: none; }
 
@@ -47,37 +58,54 @@ img { max-width: 100%; display: block; }
 }
 .hero-section::before {
     content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    /* Gradiente neutro mantido */
     background: linear-gradient(90deg, rgba(255,255,255,1) 35%, rgba(255,255,255,0.9) 60%, rgba(255,255,255,0.4) 100%);
     z-index: 1;
 }
 .hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1.1fr 1fr; gap: 2rem; align-items: center; }
 
-.hero-text h1 { font-size: 3.5rem; line-height: 1.1; font-weight: 800; margin-bottom: 1.5rem; color: var(--blue-nav); }
+/* Títulos e textos Hero */
+/* Título agora usa a cor escura premium ou o Dourado. Optei pelo escuro para contraste, com destaque. */
+.hero-text h1 { font-size: 3.5rem; line-height: 1.1; font-weight: 800; margin-bottom: 1.5rem; color: var(--chev-nav); }
 .hero-text p { font-size: 1.1rem; color: var(--text-gray); margin-bottom: 2rem; max-width: 90%; }
+
 .stats-row { display: flex; gap: 2rem; margin-bottom: 2rem; }
 .stat-item { display: flex; flex-direction: column; }
-.stat-number { font-size: 2rem; font-weight: 800; color: var(--blue-btn); }
+/* Números em Dourado */
+.stat-number { font-size: 2rem; font-weight: 800; color: var(--chev-gold); }
 .stat-desc { font-size: 0.8rem; color: var(--text-gray); }
 
 .hero-buttons { display: flex; gap: 1rem; }
 .btn-primary, .btn-outline, .btn-full {
     padding: 12px 24px; border-radius: 50px; font-weight: 600; text-align: center; display: inline-block; transition: 0.3s;
 }
-.btn-primary { background-color: var(--blue-btn); color: white; }
+/* Botões principais Dourados */
+.btn-primary { background-color: var(--chev-gold); color: white; }
+.btn-primary:hover { background-color: var(--chev-gold-hover); }
+
 .btn-outline { border: 1px solid #9ca3af; color: var(--text-dark); }
-.btn-full { width: 100%; border-radius: 8px; background-color: var(--blue-btn); color: white; }
+.btn-outline:hover { border-color: var(--chev-gold); color: var(--chev-gold); } /* Hover Dourado */
+
+.btn-full { width: 100%; border-radius: 8px; background-color: var(--chev-gold); color: white; }
+.btn-full:hover { background-color: var(--chev-gold-hover); }
 
 /* Hero Visual (Cards Flutuantes) */
 .hero-visual { position: relative; height: 400px; }
 .glass-card {
-    position: absolute; background: rgba(255, 255, 255, 0.9); padding: 15px; border-radius: 16px;
+    position: absolute; background: rgba(255, 255, 255, 0.95); padding: 15px; border-radius: 16px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 10px; min-width: 200px;
     animation: float 6s ease-in-out infinite;
 }
 .icon-box { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-.icon-blue-light { background: #eff6ff; color: var(--blue-btn); }
-.icon-blue { background: #dbeafe; color: #0ea5e9; }
-.icon-green { background: #dcfce7; color: #22c55e; }
+
+/* ÍCONES ADAPTADOS PARA TEMA CHEVROLET */
+/* Fundo amarelo bem claro, ícone dourado */
+.icon-blue-light { background: #fffbeb; color: var(--chev-gold); } 
+/* Fundo dourado suave, icone escuro */
+.icon-blue { background: #fef3c7; color: #b45309; } 
+/* Verde mantido */
+.icon-green { background: #dcfce7; color: #22c55e; } 
+
 .card-quitacao { top: 10%; left: 0; animation-delay: 0s; }
 .card-antecipacao { top: 40%; right: 0; animation-delay: 1.5s; }
 .card-segunda-via { top: 70%; left: 10%; animation-delay: 3s; }
@@ -88,34 +116,39 @@ img { max-width: 100%; display: block; }
 .section-header { text-align: center; margin-bottom: 3rem; }
 .section-header h2 { font-size: 2rem; font-weight: 800; color: var(--text-dark); }
 .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-.service-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+.service-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.3s; }
+.service-card:hover { transform: translateY(-5px); }
 .card-image img { width: 100%; height: 180px; object-fit: cover; }
 .card-body { padding: 1.5rem; }
 .tags { margin-bottom: 10px; }
 .tag { font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; font-weight: 700; margin-right: 5px; display: inline-block; background: #e5e7eb; color: var(--text-gray); }
-.tag-blue { background: #eff6ff; color: var(--blue-btn); }
+
+/* TAGS ADAPTADAS */
+.tag-blue { background: #fffbeb; color: #b45309; } /* Agora Dourada */
 .tag-green { background: #dcfce7; color: #16a34a; }
 
 /* Benefícios */
 .section-benefits { padding: 80px 0; background-color: #fff; position: relative; z-index: 2; }
 .split-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
 .benefits-list li { margin-bottom: 1rem; display: flex; gap: 10px; align-items: center; }
-.benefits-list i { color: var(--blue-btn); }
-.image-wrapper { border-radius: 24px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+.benefits-list i { color: var(--chev-gold); } /* Icones da lista em Dourado */
+.image-wrapper { border-radius: 24px; overflow: hidden; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2); }
 
 /* Footer */
-footer { background-color: var(--blue-nav); color: white; padding-top: 4rem; position: relative; z-index: 2; }
+footer { background-color: var(--chev-nav); color: white; padding-top: 4rem; position: relative; z-index: 2; }
 .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; padding-bottom: 2rem; }
 .footer-col h4 { margin-bottom: 1rem; }
-.footer-col ul li a { color: #bfdbfe; font-size: 0.9rem; }
-.footer-bottom { background-color: rgba(0,0,0,0.2); text-align: center; padding: 1.5rem; font-size: 0.8rem; }
+.footer-col ul li a { color: #d1d5db; font-size: 0.9rem; } /* Link rodapé cinza */
+.footer-col ul li a:hover { color: var(--chev-gold); } /* Hover Dourado */
+.footer-bottom { background-color: rgba(0,0,0,0.5); text-align: center; padding: 1.5rem; font-size: 0.8rem; }
 
-/* WhatsApp */
+/* WhatsApp (MANTIDO VERDE) */
 .whatsapp-widget { position: fixed; bottom: 20px; left: 20px; z-index: 2000; }
-.wa-btn { width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+.wa-btn { width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s; }
+.wa-btn:hover { transform: scale(1.1); }
 
 /* =========================================
-   RESPONSIVIDADE (MOBILE) - A MÁGICA AQUI
+   RESPONSIVIDADE (MOBILE)
    ========================================= */
 @media (max-width: 900px) {
     /* Menu Mobile */
@@ -125,37 +158,36 @@ footer { background-color: var(--blue-nav); color: white; padding-top: 4rem; pos
     .nav-links {
         position: absolute;
         top: 70px; left: 0; width: 100%;
-        background-color: var(--blue-nav);
+        background-color: var(--chev-nav); /* Fundo Escuro */
         flex-direction: column;
         align-items: center;
         gap: 0;
         max-height: 0;
         overflow: hidden;
         transition: 0.3s ease-in-out;
-        box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+        box-shadow: 0 10px 10px rgba(0,0,0,0.2);
     }
-    /* Quando o JS adicionar a classe 'active', o menu abre */
     .nav-links.active { max-height: 400px; padding: 20px 0; }
     
     .nav-links li { width: 100%; text-align: center; }
     .nav-links a { display: block; padding: 15px; color: white; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .mobile-only-btn { display: block; margin-top: 10px; }
-    .btn-nav-mobile { background-color: var(--blue-btn); color: white; padding: 10px 30px; border-radius: 50px; display: inline-block; }
+    .btn-nav-mobile { background-color: var(--chev-gold); color: white; padding: 10px 30px; border-radius: 50px; display: inline-block; }
 
     /* Hero Mobile */
     .hero-section { 
         padding-top: 100px; 
         padding-bottom: 40px; 
-        background-image: none; /* Tira a imagem pesada */
-        background-color: #f8fafc; /* Fundo claro */
-        text-align: center; /* Centraliza tudo */
+        background-image: none; 
+        background-color: var(--bg-light); /* Fundo claro neutro */
+        text-align: center; 
     }
-    .hero-section::before { display: none; } /* Tira a máscara */
+    .hero-section::before { display: none; }
     
     .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
     
     .hero-text { align-items: center; text-align: center; }
-    .hero-text h1 { font-size: 2.2rem; color: var(--text-dark); } /* Fonte menor */
+    .hero-text h1 { font-size: 2.2rem; color: var(--text-dark); }
     .hero-text p { margin: 0 auto 2rem auto; font-size: 1rem; }
     
     .stats-row { justify-content: center; gap: 1.5rem; }
@@ -164,7 +196,6 @@ footer { background-color: var(--blue-nav); color: white; padding-top: 4rem; pos
     .hero-buttons { justify-content: center; flex-direction: column; width: 100%; gap: 10px; }
     .btn-primary, .btn-outline { width: 100%; }
 
-    /* Esconde os cards flutuantes no mobile para limpar a tela */
     .hero-visual.desktop-only { display: none; }
 
     /* Serviços e Benefícios Mobile */
