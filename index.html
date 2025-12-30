@@ -3,192 +3,391 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal de Atendimento - Início</title>
-    
+    <title>Central de atendimento ao Paciente</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* --- CORES PRINCIPAIS (LARANJA) --- */
+            --primary-orange-dark: #fb8c00;
+            --primary-orange: #ff9800;
+            /* --- CORES SECUNDÁRIAS --- */
+            --whatsapp-green: #25D366;
+            --light-gray: #f8f9fa;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-primary);
+        }
+
+        /* --- Animações --- */
+        .fade-in-section { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .fade-in-section.is-visible { opacity: 1; transform: translateY(0); }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-15px); } 60% { transform: translateY(-5px); } }
+        @keyframes whatsapp-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
+            80% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* --- Navbar --- */
+        .navbar { transition: all 0.4s ease-out; }
+        .navbar.scrolled { background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .nav-link { font-weight: 500; }
+        .navbar-brand { color: var(--primary-orange-dark) !important; }
+        .btn-nav-cta {
+            background-color: var(--primary-orange);
+            color: white; border-radius: 50px; padding: 8px 25px; transition: all 0.3s; font-weight: 500;
+        }
+        .btn-nav-cta:hover {
+            background-color: var(--primary-orange-dark);
+            color: white; transform: scale(1.05);
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            position: relative;
+            height: 90vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; color: white;
+            background-image: url('https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+            background-size: cover; background-position: center;
+        }
+        .hero-section::before { /* Overlay Laranja */
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 152, 0, 0.75);
+            z-index: 2;
+        }
+        .hero-content { position: relative; z-index: 3; animation: 1s fadeInUp ease-out; }
+        .hero-content h1 { font-weight: 700; font-size: 3.5rem; }
+        .hero-content p { font-size: 1.25rem; font-weight: 400; max-width: 650px; margin: 20px auto; }
+        .scroll-indicator {
+            position: absolute; bottom: 30px; z-index: 3;
+            font-size: 1.5rem; animation: 1.5s infinite bounce;
+        }
+
+        /* --- Seções e Títulos --- */
+        section { padding: 80px 0; }
+        .section-title { font-weight: 700; color: var(--primary-orange-dark); }
+        .section-subtitle { font-size: 1.1rem; max-width: 600px; margin: 15px auto; }
+
+        /* --- BOTÕES PRIMÁRIOS COM ESTILO "CLIQUE AQUI" --- */
+        .primary-actions-section { padding-top: 0; margin-top: -80px; position: relative; z-index: 10; }
+        .primary-action-btn {
+            background-color: white; color: var(--text-primary); text-decoration: none;
+            display: flex; align-items: center; padding: 1.5rem; border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: all 0.3s ease;
+        }
+        .primary-action-btn:hover {
+            transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            color: var(--primary-orange);
+        }
+        .primary-action-btn .icon {
+            font-size: 2.5rem; margin-right: 1.25rem;
+            color: var(--primary-orange);
+        }
+        .primary-action-btn .text-content { flex-grow: 1; }
+        .primary-action-btn h4 { font-size: 1.2rem; font-weight: 600; }
+        .primary-action-btn .arrow-icon {
+            font-size: 1.8rem;
+            color: var(--primary-orange);
+            opacity: 0.5; transition: all 0.3s ease;
+        }
+        .primary-action-btn:hover .arrow-icon {
+            opacity: 1; transform: translateX(5px);
+        }
+
+        /* --- Como Funciona --- */
+        .how-it-works-section { background-color: var(--light-gray); }
+        .step-card { text-align: center; }
+        .step-icon {
+            width: 80px; height: 80px; background-color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem auto; font-size: 2rem;
+            color: var(--primary-orange);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        /* Para o número 1, que não é ícone */
+        .step-icon:not(:has(i)) {
+            background-color: var(--primary-orange);
+            color: white;
+        }
+
+        /* --- Seção de Confiança --- */
+        .trust-section {
+            background-color: var(--primary-orange-dark);
+            color: white;
+        }
+        .trust-section .section-title { color: white; }
+        .trust-section .icon {
+            font-size: 3rem;
+            color: var(--primary-orange);
+        }
+        .trust-section h4 { color: white; }
+        .trust-section p { color: rgba(255, 255, 255, 0.8); }
+
+        /* --- CTA Final --- */
+        .cta-section { background-color: var(--light-gray); }
+        .btn-cta-final {
+            background-color: var(--primary-orange);
+            color: white; border-radius: 50px; padding: 15px 40px; font-weight: 600; font-size: 1.2rem;
+        }
+        .btn-cta-final:hover {
+            background-color: var(--primary-orange-dark);
+        }
+
+        /* --- Footer --- */
+        .footer { background-color: white; border-top: 1px solid #dee2e6; }
+        .footer a { text-decoration: none; color: var(--text-secondary); }
+
+        /* --- Banner de Cookies --- */
+        .cookie-banner {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background-color: var(--primary-orange-dark);
+            color: white; padding: 1rem; z-index: 1050;
+            transition: transform 0.5s ease-in-out; transform: translateY(120%);
+        }
+        .cookie-banner.show { transform: translateY(0); }
+        .cookie-banner a { color: #ffe0b2; text-decoration: underline;}
+
+        /* --- BOTÃO FLUTUANTE WHATSAPP --- */
+        #whatsapp-button {
+            position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px;
+            background-color: var(--whatsapp-green);
+            color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 999;
+            text-decoration: none; transition: all 0.4s ease; opacity: 0; transform: scale(0);
+            animation: whatsapp-pulse 2s infinite 2s;
+        }
+        #whatsapp-button.visible { opacity: 1; transform: scale(1); }
+        #whatsapp-button:hover {
+            transform: scale(1.1); box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            animation-play-state: paused;
+        }
+
+        /* --- AJUSTES PARA DISPOSITIVOS MÓVEIS --- */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content p { font-size: 1.1rem; }
+            .hero-section { height: 85vh; }
+            section { padding: 60px 0; }
+            .primary-actions-section { margin-top: -60px; }
+            .primary-action-btn h4 { font-size: 1.1rem; }
+            .section-title { font-size: 1.8rem; }
+            .step-card { margin-bottom: 2rem; }
+        }
+    </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="container nav-container">
-            <div class="logo">Portal</div>
-            
-            <div class="mobile-menu-icon">
-                <i class="fas fa-bars"></i>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="bi bi-shield-check me-2"></i>Central de Atendimento
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link mx-2" href="#comofunciona">Como Funciona</a></li>
+                    <li class="nav-item"><a class="nav-link mx-2" href="#seguranca">Segurança</a></li>
+                    <li class="nav-item ms-3"><a class="btn btn-nav-cta" href="#acoes">Iniciar Atendimento</a></li>
+                </ul>
             </div>
-
-            <ul class="nav-links">
-                <li><a href="index.html" class="active">Início</a></li>
-                <li><a href="sobre.html">Sobre</a></li>
-                <li><a href="#servicos">Serviços</a></li>
-                <li><a href="#contato">Contato</a></li>
-                <li class="mobile-only-btn">
-                    <a href="https://wa.me/5515981650120" class="btn-nav-mobile">Segunda Via</a>
-                </li>
-            </ul>
-
-            <a href="https://wa.me/5515981650120" class="btn-nav desktop-only">Segunda Via</a>
         </div>
     </nav>
 
     <header class="hero-section">
-        <div class="container hero-grid">
-            <div class="hero-text">
-                <h1>Facilitamos o <br> Acesso aos Serviços <br> que Você Precisa</h1>
-                <p>Solicite segunda via, antecipe parcelas, quite seu contrato, regularize parcelas em atraso e reduza valores de forma prática e rápida.</p>
-                
-                <div class="stats-row">
-                    <div class="stat-item">
-                        <span class="stat-number" data-target="50000">0</span>
-                        <span class="stat-desc">Clientes</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-target="1200">0</span>
-                        <span class="stat-desc">Solicitações</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-target="98" data-suffix="%">0</span>
-                        <span class="stat-desc">Satisfação</span>
-                    </div>
-                </div>
-
-                <div class="hero-buttons">
-                    <a href="https://wa.me/5515981650120" class="btn-primary">Solicitar Agora</a>
-                    <a href="sobre.html" class="btn-outline">Saiba Mais</a>
-                </div>
-            </div>
-
-            <div class="hero-visual desktop-only">
-                <div class="glass-card card-quitacao">
-                    <div class="icon-box icon-blue-light"><i class="far fa-calendar-check"></i></div>
-                    <div class="card-info">
-                        <strong>Quitação</strong>
-                        <span>3.200</span>
-                    </div>
-                </div>
-                <div class="glass-card card-antecipacao">
-                    <div class="icon-box icon-green"><i class="fas fa-hand-holding-usd"></i></div>
-                    <div class="card-info">
-                        <strong>Antecipação</strong>
-                        <span>1.890</span>
-                    </div>
-                </div>
-                <div class="glass-card card-segunda-via">
-                    <div class="icon-box icon-blue"><i class="far fa-file-alt"></i></div>
-                    <div class="card-info">
-                        <strong>2ª Via</strong>
-                        <span>2.450</span>
-                    </div>
-                </div>
-            </div>
+        <div class="hero-content">
+            <h1 class="display-3">Sua tranquilidade financeira, descomplicada.</h1>
+            <p>Resolva suas pendências do plano de saúde de forma rápida, segura e humana, diretamente pelo WhatsApp.</p>
         </div>
+        <div class="scroll-indicator text-white"><i class="bi bi-mouse"></i></div>
     </header>
 
-    <section id="servicos" class="section-services">
-        <div class="container">
-            <div class="section-header">
-                <h2>Serviços em Destaque</h2>
-                <p>Soluções rápidas e seguras</p>
-            </div>
-
-            <div class="cards-grid">
-                <article class="service-card">
-                    <div class="card-image">
-                        <img src="https://www.bancohonda.com.br/bhb/sites/bhb/files/styles/two_columns_block_image/public/2025-10/Banco-Honda-desktop.png.webp?itok=e8Gd8hbO" alt="Boleto">
+    <main>
+        <section id="acoes" class="primary-actions-section fade-in-section">
+            <div class="container">
+                <div class="row g-4 justify-content-center">
+                    <div class="col-lg-5 col-md-6">
+                        <a href="https://wa.me/5547997030373?text=Ol%C3%A1!%20Gostaria%20de%20regularizar%20uma%20mensalidade%20em%20atraso." target="_blank" class="primary-action-btn">
+                            <div class="icon"><i class="bi bi-shield-check"></i></div>
+                            <div class="text-content">
+                                <h4 class="mb-0">Mensalidades em Atraso</h4>
+                                <p class="mb-0 small text-secondary">Negocie com condições especiais</p>
+                            </div>
+                            <div class="arrow-icon ms-auto"><i class="bi bi-arrow-right-circle-fill"></i></div>
+                        </a>
                     </div>
-                    <div class="card-body">
-                        <div class="tags"><span class="tag tag-blue">Rápido</span></div>
-                        <h3>Segunda Via de Boleto</h3>
-                        <p>Emita seu boleto atualizado sem complicações.</p>
-                        <a href="https://wa.me/5515981650120" class="btn-full">Solicitar Agora</a>
+                    <div class="col-lg-5 col-md-6">
+                           <a href="https://wa.me/5547997030373?text=Ol%C3%A1!%20Gostaria%20de%20falar%20com%20um%20atendente." target="_blank" class="primary-action-btn">
+                                <div class="icon"><i class="bi bi-headset"></i></div>
+                                <div class="text-content">
+                                    <h4 class="mb-0">Fale Conosco</h4>
+                                    <p class="mb-0 small text-secondary">2ª via, dúvidas e suporte</p>
+                                </div>
+                                <div class="arrow-icon ms-auto"><i class="bi bi-arrow-right-circle-fill"></i></div>
+                            </a>
                     </div>
-                </article>
-                <article class="service-card">
-                    <div class="card-image">
-                        <img src="https://www.chevroletsf.com.br/content/dam/gmf-sites/gmf-io/pt-br/in%c3%adcio-novo/imagenes/banner_whatsapp_Banner%20Site%20whats%201920px.jpg" alt="Dinheiro">
-                    </div>
-                    <div class="card-body">
-                        <div class="tags"><span class="tag tag-green">Seguro</span></div>
-                        <h3>Antecipação</h3>
-                        <p>Reduza o valor total da sua dívida com descontos.</p>
-                        <a href="https://wa.me/5515981650120" class="btn-full">Antecipar Agora</a>
-                    </div>
-                </article>
-                <article class="service-card">
-                    <div class="card-image">
-                        <img src="data:image/jpeg;base64,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" alt="Contrato">
-                    </div>
-                    <div class="card-body">
-                        <div class="tags"><span class="tag tag-blue">Flexível</span></div>
-                        <h3>Quitação de Contrato</h3>
-                        <p>Elimine sua dívida com as melhores condições.</p>
-                        <a href="https://wa.me/5515981650120" class="btn-full">Quitar Contrato</a>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <section id="sobre" class="section-benefits">
-        <div class="container split-layout">
-            <div class="text-column">
-                <h2>Soluções rápidas e seguras</h2>
-                <ul class="benefits-list">
-                    <li><i class="fas fa-check-circle"></i> Solicitação em poucos cliques</li>
-                    <li><i class="fas fa-check-circle"></i> Atendimento 100% online</li>
-                    <li><i class="fas fa-check-circle"></i> Segurança garantida</li>
-                </ul>
-                <div class="benefits-buttons">
-                    <a href="https://wa.me/5515981650120" class="btn-primary">FALAR COM ATENDENTE</a>
                 </div>
             </div>
-            <div class="image-column">
-                <div class="image-wrapper">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1zt6uxU1pwbHyU3k9MlfJZwVSRFPtYqo4qA&s" alt="Atendimento">
+        </section>
+
+        <section id="comofunciona" class="how-it-works-section fade-in-section">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">É simples, rápido e humano</h2>
+                    <p class="section-subtitle text-secondary">Em apenas 3 passos, sua situação está resolvida.</p>
+                </div>
+                <div class="row g-5">
+                    <div class="col-md-4 step-card">
+                        <div class="step-icon">1</div>
+                        <h4 class="fw-bold">Escolha o Serviço</h4>
+                        <p class="text-secondary">Clique na opção que você precisa: negociação ou suporte geral.</p>
+                    </div>
+                    <div class="col-md-4 step-card">
+                        <div class="step-icon"><i class="bi bi-whatsapp"></i></div>
+                        <h4 class="fw-bold">Converse no WhatsApp</h4>
+                        <p class="text-secondary">Você será direcionado para um de nossos especialistas, sem robôs ou esperas.</p>
+                    </div>
+                    <div class="col-md-4 step-card">
+                        <div class="step-icon"><i class="bi bi-check2-circle"></i></div>
+                        <h4 class="fw-bold">Resolvido!</h4>
+                        <p class="text-secondary">Receba seu boleto ou as condições de negociação e finalize tudo na hora.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer id="contato">
-        <div class="container footer-grid">
-            <div class="footer-col">
-                <h3>Portal</h3>
-                <p>Sua assessoria especializada.</p>
+        <section id="seguranca" class="trust-section fade-in-section">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="section-title text-white">Sua segurança em primeiro lugar</h2>
+                </div>
+                <div class="row g-5 text-center">
+                    <div class="col-md-4">
+                        <div class="icon mb-3"><i class="bi bi-lock"></i></div>
+                        <h4 class="fw-bold">Dados Protegidos</h4>
+                        <p>Utilizamos criptografia de ponta para garantir a segurança de suas informações.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="icon mb-3"><i class="bi bi-people"></i></div>
+                        <h4 class="fw-bold">Atendimento Humano</h4>
+                        <p>Nossa equipe está preparada para entender seu caso e oferecer a melhor solução.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="icon mb-3"><i class="bi bi-phone"></i></div>
+                        <h4 class="fw-bold">Praticidade Total</h4>
+                        <p>Resolva tudo pelo celular, de onde estiver, sem precisar de ligações ou papéis.</p>
+                    </div>
+                </div>
             </div>
-            <div class="footer-col">
-                <h4>Links</h4>
-                <ul>
-                    <li><a href="index.html">Início</a></li>
-                    <li><a href="sobre.html">Sobre</a></li>
-                    <li><a href="politicas.html">Políticas</a></li>
-                </ul>
+        </section>
+
+        <section class="cta-section text-center fade-in-section">
+            <div class="container">
+                <h2 class="section-title">Precisa de outro tipo de ajuda?</h2>
+                <p class="section-subtitle text-secondary">Nossa equipe de suporte geral está pronta para te atender. Clique abaixo e fale conosco.</p>
+                   <a href="https://wa.me/5547997030373?text=Ol%C3%A1!%20Preciso%20de%20ajuda." target="_blank" class="btn btn-cta-final shadow">Falar com Atendente</a>
             </div>
-            <div class="footer-col">
-                <h4>Contato</h4>
-                <p><i class="fas fa-phone-alt"></i> +55 (11)96723-4048</p>
-                <p><i class="fas fa-envelope"></i> contato@portal.com</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 Portal. Todos os direitos reservados.</p>
+        </section>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <p class="mb-2 mb-md-0">&copy; 2025 Central de Atendimento. Todos os direitos reservados.</p>
+               <a href="politica-de-privacidade.html" class="small">Política de Privacidade</a>
         </div>
     </footer>
 
-    <div class="whatsapp-widget">
-        <a href="https://wa.me/5515981650120" class="wa-btn">
-            <i class="fab fa-whatsapp"></i>
-        </a>
+      <a href="https://wa.me/5547997030373?text=Ol%C3%A1!%20Gostaria%20de%20falar%20com%20um%20atendente."
+        id="whatsapp-button"
+        target="_blank"
+        aria-label="Fale conosco pelo WhatsApp">
+         <i class="bi bi-whatsapp"></i>
+    </a>
+
+    <div class="cookie-banner" id="cookie-banner">
+        <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between">
+            <p class="mb-2 mb-md-0 me-md-4">Usamos cookies para otimizar sua experiência. Ao continuar, você concorda com nossa <a href="politica-de-privacidade.html">Política de Privacidade</a>.</p>
+            <button id="accept-cookies" class="btn btn-sm btn-light flex-shrink-0">Entendi</button>
+        </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // JavaScript inalterado
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbar = document.querySelector('.navbar');
+            const whatsappButton = document.getElementById('whatsapp-button');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) navbar.classList.add('scrolled');
+                else navbar.classList.remove('scrolled');
+
+                if (window.scrollY > 300) {
+                    whatsappButton.classList.add('visible');
+                } else {
+                    whatsappButton.classList.remove('visible');
+                }
+            });
+
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            sections.forEach(section => observer.observe(section));
+
+            (function() {
+                const cookieBanner = document.getElementById('cookie-banner');
+                const acceptButton = document.getElementById('accept-cookies');
+
+                if (localStorage.getItem('cookiesAccepted_v1') !== 'true') {
+                    setTimeout(() => { cookieBanner.classList.add('show'); }, 2000);
+                }
+
+                acceptButton.addEventListener('click', function() {
+                    localStorage.setItem('cookiesAccepted_v1', 'true');
+                    cookieBanner.classList.remove('show');
+                });
+            })();
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(this.getAttribute('href'));
+                    if (targetElement) {
+                        // Calcula offset do header fixo
+                        const headerOffset = navbar.offsetHeight || 70;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                        window.scrollTo({
+                             top: offsetPosition,
+                             behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
+
+
 </html>
+
 
 
 
